@@ -27,6 +27,8 @@ class Forms
 	
 	protected $csf_token = null;
 	
+	protected $field_array = array();
+	
 	public $htmlGenerated = null;
 	
 	public function __construct()
@@ -34,15 +36,32 @@ class Forms
 		
 	}
 	
-	public function open($action, $method = "post")
+	public function create($action, $method = "post")
 	{
-		$this->htmlGenerated .= '<form action="'.$action.'" method="'.$method.'">';
+		//$this->htmlGenerated .= '<form action="'.$action.'" method="'.$method.'">';
+		
+		$this->action = $action;
+		$this->method = $method;
+		
 		return $this;
 	}
 
 	public function element_text($field_name)
 	{
-		$this->htmlGenerated .= '<input type="text" name="'.$field_name.'" value=""/>';
+		//$this->htmlGenerated .= '<input type="text" name="'.$field_name.'" value=""/>';
+		
+		$fieldTemp = array(
+			'type' 	=>	'text',
+			'name'	=>	$field_name,
+			'value'	=>	null,
+			'class' =>	null,
+			'id'	=>	null,
+			'placeholder'	=>	null,
+			'max_length'	=> null
+		);
+		
+		array_push($this->field_array, $fieldTemp);
+	
 		return $this;
 	}
 	
@@ -50,18 +69,44 @@ class Forms
 	{
 		if($button_text == false) 
 			$button_text = $this->submit_btn_text;
-		$this->htmlGenerated .= "<input type='submit' value='".$button_text."'/>";
+		
+		//$this->htmlGenerated .= "<input type='submit' value='".$button_text."'/>";
+		
+		$fieldTemp = array(
+			'type' 	=>	'submit',
+			'name'	=>	null,
+			'value'	=>	$button_text,
+			'class' =>	null,
+			'id'	=>	null
+		);
+		
+		array_push($this->field_array, $fieldTemp);
+		
 		return $this;
 	}
 	
-	public function close()
-	{
-		$this->htmlGenerated .= '</form>';
-		return $this;
-	}
 	
 	public function getHtml()
 	{
+		
+		$this->htmlGenerated = null; // clear it to be safe
+		$this->htmlGenerated .= '<form action="'.$this->action.'" method="'.$this->method.'">';
+		
+		foreach($this->field_array as $html_field)
+		{
+			switch($html_field['type'])
+			{
+				case 'text':
+					$this->htmlGenerated .= '<input type="text" name="'.$html_field['name'].'" value=""/>';
+				break;
+				case 'submit':
+					$this->htmlGenerated .= '<input type="submit" value="'.$html_field['value'].'"/>';
+				break;
+			}
+		}
+		
+		$this->htmlGenerated .= '</form>';
+		
 		return $this->htmlGenerated;
 	}
 }
