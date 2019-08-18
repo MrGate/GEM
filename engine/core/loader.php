@@ -52,6 +52,8 @@ class loader {
 		$this->gem_model_path = APPPATH . '/model/';
 		$this->gem_librarie_path = APPPATH . '/libraries/';
 		$this->gem_view_path = APPPATH . '/views/';
+		
+		$this->gem_core_librarie_path = BASEPATH . '/libraries/';
 	}
 
 
@@ -93,6 +95,19 @@ class loader {
 		}
 
 		require_once $this->gem_librarie_path . $library . '.php';
+		return new $library();
+
+	}
+	
+	public function core_library($library)
+	{
+
+		if (empty($library))
+		{
+			return $this;
+		}
+
+		require_once $this->gem_core_librarie_path . $library . '.php';
 		return new $library();
 
 	}

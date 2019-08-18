@@ -26,7 +26,7 @@ class Gem
 		 
 		require_once BASEPATH . '/core/gem_controller.php';
 		require_once BASEPATH . '/core/gem_model.php';
-
+		
 		// set the default controller form the config file
 		$this->controller = $config['default_controller'];
 		
