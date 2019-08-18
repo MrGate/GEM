@@ -39,6 +39,8 @@ class loader {
 	 *
 	 * @return	void
 	 */
+
+	 
 	public function __construct()
 	{
 		// define some of the paths
@@ -96,7 +98,6 @@ class loader {
 
 		require_once $this->gem_librarie_path . $library . '.php';
 		return new $library();
-
 	}
 	
 	public function core_library($library)

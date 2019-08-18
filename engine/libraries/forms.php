@@ -4,6 +4,9 @@
 
 class Forms
 {
+	// Super global object.
+	protected $GEM;
+	
 	// Form name
 	public $name = null;
 	
@@ -25,7 +28,10 @@ class Forms
 	// form session
 	public $session = null;
 	
-	protected $csf_token = null;
+	// csrf vars 
+	protected $csrf_forced = false;
+	protected $csrf_token = null;
+	public $csrf_token_length = 32;
 	
 	protected $field_array = array();
 	
@@ -33,6 +39,16 @@ class Forms
 	
 	public function __construct()
 	{
+		//$this->GEM->load->config('forms');
+		//var_dump($this->Gem);
+		
+		if($config['force_csrf_token'] == true)
+		{
+			$this->csrf_forced = true;
+			session_start();
+			$this->csrf_token = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $this->csrf_token_length);
+			$_SESSION['ctk'] = $this->csrf_token;
+		}
 		
 	}
 	

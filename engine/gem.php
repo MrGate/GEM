@@ -2,7 +2,6 @@
 
 class Gem 
 {
-
 	protected $url = '';
 
 	protected $controller = '';
@@ -17,15 +16,22 @@ class Gem
 	protected $lost_path;
 	
 	public $this;
+	public $GEM;		
 	
-
+	public $GEM_MODEL;
+	
 	public function __construct()
 	{
 		// grab the config file
 		require APPPATH . '/config/' . ENVIRONMENT . '/config.php'; 
-		 
+		
+		//$this->GEM = 'HELLO BITCH';
+
+		
 		require_once BASEPATH . '/core/gem_controller.php';
 		require_once BASEPATH . '/core/gem_model.php';
+		
+		//$this->GEM_MODEL = new Gem_model();
 		
 		// set the default controller form the config file
 		$this->controller = $config['default_controller'];
@@ -41,6 +47,7 @@ class Gem
 		if($this->lost_override == false)
 		{
 			// simple default message for 404.
+			header('HTTP/1.1 404 Not Found');
 			die("Error 404 : ".$type." not found error");
 		}
 		else
@@ -81,7 +88,7 @@ class Gem
 		require_once APPPATH . '/controller/' . $this->controller . '.php';
 
 		// make the controller a new object
-		$this->controller = new $this->controller;
+		$this->controller = new $this->controller();
 
 		if($this->lost_check == false)
 		{

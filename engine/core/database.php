@@ -58,9 +58,18 @@ class database {
 	 * @return	mixed
 	 */
 	public function query($sql)
-	{
-		$this->query_handle = $this->db_handle->query($sql);
-		return $this->query_handle->fetch_all(MYSQLI_ASSOC);
+	{	
+		if($this->query_handle = $this->db_handle->query($sql))
+		{
+			if(mysqli_num_rows($this->query_handle) > 0)
+				return $this->query_handle->fetch_all(MYSQLI_ASSOC);
+			else
+				return false;	
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -72,7 +81,8 @@ class database {
 	 */
 	public function numrows()
 	{
-		return $this->query_handle->num_rows;
+		if($this->query_handle)
+			return $this->query_handle->num_rows;
 	}
 
 	/**
@@ -84,7 +94,8 @@ class database {
 	 */
 	public function free()
 	{
-		$this->query_handle->free();
+		if($this->query_handle)
+			$this->query_handle->free();
 	}
 
 	/**
@@ -94,7 +105,8 @@ class database {
 	 */
 	public function close()
 	{
-		$this->query_handle->close();
+		if($this->query_handle)
+			$this->query_handle->close();
 	}
 
 }

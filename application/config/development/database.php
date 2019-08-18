@@ -11,8 +11,8 @@ $config['db_host']		= 'localhost';
 
 $config['db_user']		= 'root';
 
-$config['db_pass']		= 'mysql';
+$config['db_pass']		= '';
 
-$config['db_name']		= 'modernmedical';
+$config['db_name']		= 'test';
 
 

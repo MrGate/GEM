@@ -31,5 +31,9 @@ class Gem_model
 
 	}
 
+	public function test()
+	{
+		echo 'hello';
+	}
 
 }

@@ -2,6 +2,7 @@
 
 class Example extends Gem_controller
 {
+	
 	public function index()
 	{
 		$this->load->view("welcome_message");
